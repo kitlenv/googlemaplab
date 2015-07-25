@@ -1,0 +1,94 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?
+    key=AIzaSyABH3xfxu8yvxHti7mzbcu6_lGSD3JkPiE&sensor=false"></script>
+
+    <style type="text/css">
+        #mapDiv{width: 800px; height: 500px;}
+    </style>
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    
+    <script type="text/javascript">
+
+    var map;
+    function initMap(){
+        google.maps.visualRefresh = true;
+
+        var bluishStyle = [
+        {
+            stylers:[
+                {hue: "#009999"},
+                {saturation: -5},
+                {lightness: -40}
+            ]
+        },
+        {
+            featureType: "road",
+            elementType: "geometry",
+            stylers:[
+                {lightness: 100},
+                {visibility: "simplified"}
+            ]
+        },
+        {
+            featureType: "water",
+            elementType: "geometry",
+            stylers:[
+                {hue: "#0000FF"},
+                {saturation: -40}
+            ]
+        },
+        {
+            featureType: "administrative.neighborhood",
+            elementType: "labels.text.stoke",
+            stylers:[
+                {color: "#E80000"},
+                {weight: 1}
+            ]
+        },
+        {
+            featureType: "road",
+            elementType: "labels.text",
+            stylers:[
+                {visibility: "off"}
+            ]
+        },
+        {
+            featureType: "road.highway",
+            elementType: "geometry.fill",
+            stylers: [
+                {color: "#FF00FF"},
+                {weight: 2}
+            ]
+        }
+        ]
+
+        var bluishStypledMap = new google.maps.StyledMapType(bluishStyle, 
+            {name: "Bluish Google Map with Pink Highways"});
+
+
+        var mapOptions = {
+            center: new google.maps.LatLng(-37.814150, 144.963029),
+            zoom: 10,
+            //mapTypeId: 'new_bluish_style'
+            mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'new_bluish_style']}
+            //styles: bluishStyle
+        };
+
+        var mapElement = document.getElementById('mapDiv');
+
+        map = new google.maps.Map(mapElement, mapOptions);
+
+        map.mapTypes.set('new_bluish_style', bluishStypledMap);
+        map.setMapTypeId('new_bluish_style');
+    }
+
+    google.maps.event.addDomListener(window, 'load', initMap);
+
+    </script>
+</head>
+<body>
+<div id="mapDiv"></div>
+</body>
+</html>

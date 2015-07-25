@@ -1,7 +1,7 @@
 <html>
 <head>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?
-    key=AIzaSyABH3xfxu8yvxHti7mzbcu6_lGSD3JkPiE&sensor=false"></script>
+    key=AIzaSyABH3xfxu8yvxHti7mzbcu6_lGSD3JkPiE&sensor=false&libraries=weather"></script>
 
     <style type="text/css">
         html{ height: 100%;}
@@ -17,13 +17,23 @@
 
         var mapOptions = {
             center: new google.maps.LatLng(-37.814150, 144.963029),
-            zoom: 10,
+            zoom: 5,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
         var mapElement = document.getElementById('mapDiv');
 
         map = new google.maps.Map(mapElement, mapOptions);
+
+        var weatherLayer = new google.maps.weather.WeatherLayer(
+        {
+            temperatureUnits: google.maps.weather.TemperatureUnit.CELCIUS
+        });
+
+        weatherLayer.setMap(map);
+
+        var cloudLayer = new google.maps.weather.CloudLayer();
+        cloudLayer.setMap(map);
     }
 
     google.maps.event.addDomListener(window, 'load', initMap);

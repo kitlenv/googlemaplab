@@ -1,0 +1,63 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?
+    key=AIzaSyABH3xfxu8yvxHti7mzbcu6_lGSD3JkPiE&sensor=false">
+    </script>
+    
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    
+    <style type="text/css">
+        html{ height: 100%;}
+        body{ height: 100%; margin: 0;}
+        #mapDiv{width: 100%; height: 100%;}
+    </style>
+
+    <script type="text/javascript">
+
+    var map;
+    var osmMapType;
+    function initMap(){
+        google.maps.visualRefresh = true;
+
+        osmMapType = new google.maps.ImageMapType(
+        {
+            getTileUrl: function(coord, zoom){
+                return 'http://tile.openstreetmap.org/' + zoom + '/' + coord.x + '/' + coord.y + '.png';
+            },
+            tileSize: new google.maps.Size(256, 256),
+            name: 'OpenStreetMap',
+            maxZoom: 18
+        }
+        );
+
+
+        var mapOptions = {
+            center: new google.maps.LatLng(-37.814150, 144.963029),
+            zoom: 10,
+            //mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE]}
+        };
+
+        var mapElement = document.getElementById('mapDiv');
+
+        map = new google.maps.Map(mapElement, mapOptions);
+        map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+        map.overlayMapTypes.push(null);
+
+    }
+
+    google.maps.event.addDomListener(window, 'load', initMap);
+
+    function toggleOverlayMaps(){
+        var OSMLayer = document.getElementById('OSM');
+        map.overlayMapTypes.setAt(0, OSMLayer.checked ? osmMapType : null);
+    }
+    
+    </script>
+</head>
+<body>
+<input type='checkbox' id='OSM' class='overlayMaps' onclick='toggleOverlayMaps()' />
+<label for='OSM'>OpenStreetMap Layer </label>
+<div id="mapDiv"></div>
+</body>
+</html>

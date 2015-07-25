@@ -1,7 +1,10 @@
 <html>
 <head>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?
-    key=AIzaSyABH3xfxu8yvxHti7mzbcu6_lGSD3JkPiE&sensor=false"></script>
+    key=AIzaSyABH3xfxu8yvxHti7mzbcu6_lGSD3JkPiE&sensor=false">
+    </script>
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
     <style type="text/css">
         html{ height: 100%;}
@@ -24,6 +27,19 @@
         var mapElement = document.getElementById('mapDiv');
 
         map = new google.maps.Map(mapElement, mapOptions);
+
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(
+                function(position){
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+
+                    var devCenter = new google.maps.LatLng(lat, lng);
+                    map.setCenter(devCenter);
+                    map.setZoom(17);
+                });
+        }
+
     }
 
     google.maps.event.addDomListener(window, 'load', initMap);
