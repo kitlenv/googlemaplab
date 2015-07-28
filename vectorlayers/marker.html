@@ -1,0 +1,99 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?
+    key=AIzaSyABH3xfxu8yvxHti7mzbcu6_lGSD3JkPiE&sensor=false"></script>
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    
+    <style type="text/css">
+        html{ height: 100%;}
+        body{ height: 100%; margin: 0;}
+        #mapDiv{width: 100%; height: 100%;}
+    </style>
+
+    <script type="text/javascript">
+
+    var map;
+    var minLat = -38;
+    var maxLat = -37;
+    var minLng = 144;
+    var maxLng = 145;
+    var markerId = 1;
+
+    function initMap(){
+        google.maps.visualRefresh = true;
+
+        var mapOptions = {
+            center: new google.maps.LatLng(-37.814150, 144.963029),
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var mapElement = document.getElementById('mapDiv');
+
+        map = new google.maps.Map(mapElement, mapOptions);
+
+        startButtonEvents();
+    }
+
+    google.maps.event.addDomListener(window, 'load', initMap);
+
+    function startButtonEvents(){
+        document.getElementById('addStandardMarker').addEventListener('click', function(){
+            addStandardMarker();
+        });
+
+        document.getElementById('addIconMarker').addEventListener('click', function(){
+            addIconMarker();
+        });
+    }
+
+    function createRandomLatLng(){
+        var deltaLat = maxLat - minLat;
+        var deltaLng = maxLng - minLng;
+
+        var rndNumLat = Math.random();
+        var newLat = minLat + rndNumLat * deltaLat;
+
+        var rndNumLng = Math.random();
+        var newLng = minLng + rndNumLng * deltaLng;
+
+        return new google.maps.LatLng(newLat, newLng);
+    }
+
+    function addStandardMarker(){
+        var corrdinate = createRandomLatLng();
+        var marker = new google.maps.Marker({
+            position: corrdinate,
+            map: map,
+            title: 'Random Marker ' + markerId
+        });
+
+        markerId++;
+    }
+
+    function addIconMarker(){
+        var markerIcons = ['coffee', 'restaurant_fish', 'walkingtour', 'postal', 'airport'];
+        var rndMarkerId = Math.floor(Math.random() * markerIcons.length);
+
+        var corrdinate = createRandomLatLng();
+
+        var marker = new google.maps.Marker(
+        {
+            position: corrdinate,
+            map: map,
+            icon: 'img/' + markerIcons[rndMarkerId] + '.png',
+            title: 'Random Icon Marker ' + markerId
+        });
+
+        markerId++;
+    }
+
+    </script>
+</head>
+<body>
+<a id='addStandardMarker' href='#'>Add Standard Marker</a>
+<a id='addIconMarker' href='#'>Add Icon Marker</a>
+<div id="mapDiv"></div>
+</body>
+</html>
