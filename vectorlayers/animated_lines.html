@@ -65,15 +65,33 @@
             linePath.push(createRandomLatLng());
         }
 
+        var arrowSymbol = {
+            storkeColor: '#000',
+            scale: 3,
+            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+        };
+
         var lineOptions = {
             path: linePath,
             strokeWidth: 7,
             stokeColor: '#FF0000',
-            strokeOpacity: 0.8
+            strokeOpacity: 0.8,
+            icons: [{
+                icon: arrowSymbol,
+                offset: '100%'
+            }]
         }
 
         var polyline = new google.maps.Polyline(lineOptions);
         polyline.setMap(map);
+
+        var counter = 0;
+        var accessVar = window.setInterval(function(){
+            counter = (counter+1) % 200;
+            var arrows = polyline.get('icons');
+            arrows[0].offset = (counter+2) + '%';
+            polyline.set('icons', arrows);
+        }, 50);
     }
 
     </script>
