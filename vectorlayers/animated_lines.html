@@ -40,7 +40,30 @@
 
     function startButtonEvents(){
         document.getElementById('addLines').addEventListener('click', function(){
-            addLines();
+
+            var arrowSymbol = {
+                storkeColor: '#000',
+                scale: 3,
+                path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+                //path: google.maps.SymbolPath.CIRCLE
+            };
+
+            addLines(arrowSymbol);
+        });
+
+        document.getElementById('addSpecialLines').addEventListener('click', function(){
+
+            var arrowSymbol = {
+                storkeColor: '#000000',
+                strokeWeight: 3,
+                anchor: new google.maps.Point(175, 175),
+                scale: 0.15,
+                fillColor: '#FFFF00',
+                fillOpacity: 0.8,
+                path: 'M 100 100 L 300 100 L 200 300 Z'
+            };
+
+            addLines(arrowSymbol);
         });
     }
 
@@ -57,19 +80,13 @@
         return new google.maps.LatLng(newLat, newLng);
     }
 
-    function addLines(){
+    function addLines(arrowSymbol){
 
         var linePath = [];
         for(var i = 0; i < 4; i++)
         {
             linePath.push(createRandomLatLng());
         }
-
-        var arrowSymbol = {
-            storkeColor: '#000',
-            scale: 3,
-            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-        };
 
         var lineOptions = {
             path: linePath,
@@ -98,6 +115,7 @@
 </head>
 <body>
 <a id='addLines' href='#'>Add Poly Line</a>
+<a id='addSpecialLines' href='#'>Add Special Poly Line</a>
 <div id="mapDiv"></div>
 </body>
 </html>
